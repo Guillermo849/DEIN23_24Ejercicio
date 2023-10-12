@@ -35,8 +35,20 @@ public class NuevaPersonaController {
     @FXML
     private Button btnCancelar;
     
-    public void setParent(TbPersonasController parent) {
+    private Persona person;
+    
+    public void setParent(TbPersonasController parent, Persona per) {
     	this.mainController = parent;
+    	this.person = per;
+    	
+    	if (person != null) {
+    		tfNombre.setText(person.getNombre().toString());
+        	
+        	tfApellidos.setText(person.getApellido().toString());
+        	
+        	tfEdad.setText(person.getEdad()+"".toString());
+    	}
+    	
     }
     
     /* Cierra la ventana */
@@ -89,7 +101,13 @@ public class NuevaPersonaController {
 	    			tfApellidos.getText(),
 	                Integer.parseInt(tfEdad.getText()));
     		
-    		mainController.devolverPersona(persona);
+    		/* Si la persona es null es que se va a añadir una persona nueva a la tabla
+        	 *   de lo contrario se estará modificando una persona ya existente */
+        	if (person == null) {
+        		nuevaPersona(persona);
+        	} else {
+        		modPersona(persona);
+        	}
     		
     		// Una vez guardada la persona se cerrara la ventana
     		Node n = (Node) event.getSource();
@@ -99,7 +117,14 @@ public class NuevaPersonaController {
     		stage.close();
     		
     	}
-    	
+    }
+    
+    private void nuevaPersona(Persona newPersona) {
+    	mainController.devolverPersonaNueva(newPersona);
+    }
+    
+    private void modPersona(Persona modPersona) {
+    	mainController.devolverPersonaMod(modPersona);
     }
 
 }

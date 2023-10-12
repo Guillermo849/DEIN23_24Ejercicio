@@ -22,7 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import model.Persona;
@@ -35,6 +35,12 @@ public class TbPersonasController implements Initializable{
 
     @FXML
     private Button btnAgregarPersona;
+    
+    @FXML
+    private Button btnModificar;
+
+    @FXML
+    private Button btnEliminar;
 
     @FXML
     private TableView<Persona> tbViewPersonas;
@@ -52,6 +58,15 @@ public class TbPersonasController implements Initializable{
     
     private static Image ICONO = new Image(Main.class.getResourceAsStream("/img/agenda.png"));
     
+    private int personaIndex;
+    
+    @FXML
+    void selectPersona(MouseEvent event) {
+    	if (tbViewPersonas.getSelectionModel().getSelectedItem() != null) {
+    		personaIndex = tbViewPersonas.getSelectionModel().getSelectedIndex();
+    	}
+    }
+    
     @FXML
     void aniadirPersona(ActionEvent event) {
 		try {
@@ -60,7 +75,7 @@ public class TbPersonasController implements Initializable{
 			Parent root = loader.load();
 			/* Le dice a la nueva ventana cual es su ventana padre */
 			newPersonaWindow = loader.getController();
-			newPersonaWindow.setParent(this);
+			newPersonaWindow.setParent(this, null);
 			
 			Stage agregarStage = new Stage();
 			agregarStage.setScene(new Scene(root));
@@ -73,15 +88,51 @@ public class TbPersonasController implements Initializable{
 		}
     }
     
+    @FXML
+    void modificarPersona(ActionEvent event) {
+    	try {
+    		
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/DatosPersonasAgregar.fxml"));
+			Parent root = loader.load();
+			newPersonaWindow = loader.getController();
+			newPersonaWindow.setParent(this, tbViewPersonas.getItems().get(personaIndex));
+			
+			Stage agregarStage = new Stage();
+			agregarStage.setScene(new Scene(root));
+			agregarStage.getIcons().add(ICONO);
+			agregarStage.setTitle("Modificar Persona");
+			agregarStage.showAndWait();
+			
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+    }
+    
+    /* Elimina la persona seleccionada*/
+    @FXML
+    void eliminarPersona(ActionEvent event) {
+    	if (personaIndex > -1) {
+    		tbViewPersonas.getItems().remove(personaIndex);
+    	}
+    }
+
     /*
      * Añade la informacion de la ventana DatosPersonasAgregarController a la tabla
      * */
-    public void devolverPersona(Persona person) {
+    public void devolverPersonaNueva(Persona person) {
     	ObservableList<Persona> obLstPersonas = tbViewPersonas.getItems();
     	obLstPersonas.add(person);
         tbViewPersonas.setItems(obLstPersonas);
     }
     
+    /*
+     * Añadirá la persona modificada a la tabla
+     * */
+    public void devolverPersonaMod(Persona person) {
+    	tbViewPersonas.getItems().set(personaIndex, person);
+    }
+    
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		

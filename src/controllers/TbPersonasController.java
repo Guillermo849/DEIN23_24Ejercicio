@@ -118,10 +118,17 @@ public class TbPersonasController implements Initializable{
     /*
      * Añade la informacion de la ventana DatosPersonasAgregarController a la tabla
      * */
-    public void devolverPersona(Persona person) {
+    public void devolverPersonaNueva(Persona person) {
     	ObservableList<Persona> obLstPersonas = tbViewPersonas.getItems();
     	obLstPersonas.add(person);
         tbViewPersonas.setItems(obLstPersonas);
+    }
+    
+    /*
+     * Añadirá la persona modificada a la tabla
+     * */
+    public void devolverPersonaMod(Persona person) {
+    	tbViewPersonas.getItems().set(personaIndex, person);
     }
     
 

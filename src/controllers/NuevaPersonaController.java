@@ -40,6 +40,15 @@ public class NuevaPersonaController {
     public void setParent(TbPersonasController parent, Persona per) {
     	this.mainController = parent;
     	this.person = per;
+    	
+    	if (person != null) {
+    		tfNombre.setText(person.getNombre().toString());
+        	
+        	tfApellidos.setText(person.getApellido().toString());
+        	
+        	tfEdad.setText(person.getEdad()+"".toString());
+    	}
+    	
     }
     
     /* Cierra la ventana */
@@ -55,15 +64,6 @@ public class NuevaPersonaController {
     @FXML
     void guardarPersona(ActionEvent event) {
     	
-    	if (person == null) {
-    		nuevaPersona(event);
-    	} else {
-    		modPersona();
-    	}
-    	
-    }
-    
-    private void nuevaPersona(ActionEvent event) {
     	Image icono = new Image(Main.class.getResourceAsStream("/img/agenda.png"));
     	
     	/*
@@ -101,7 +101,13 @@ public class NuevaPersonaController {
 	    			tfApellidos.getText(),
 	                Integer.parseInt(tfEdad.getText()));
     		
-    		mainController.devolverPersona(persona);
+    		/* Si la persona es null es que se va a añadir una persona nueva a la tabla
+        	 *   de lo contrario se estará modificando una persona ya existente */
+        	if (person == null) {
+        		nuevaPersona(persona);
+        	} else {
+        		modPersona(persona);
+        	}
     		
     		// Una vez guardada la persona se cerrara la ventana
     		Node n = (Node) event.getSource();
@@ -113,8 +119,12 @@ public class NuevaPersonaController {
     	}
     }
     
-    private void modPersona() {
-    	
+    private void nuevaPersona(Persona newPersona) {
+    	mainController.devolverPersonaNueva(newPersona);
+    }
+    
+    private void modPersona(Persona modPersona) {
+    	mainController.devolverPersonaMod(modPersona);
     }
 
 }

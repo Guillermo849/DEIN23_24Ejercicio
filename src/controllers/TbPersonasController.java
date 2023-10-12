@@ -35,6 +35,12 @@ public class TbPersonasController implements Initializable{
 
     @FXML
     private Button btnAgregarPersona;
+    
+    @FXML
+    private Button btnModificar;
+
+    @FXML
+    private Button btnEliminar;
 
     @FXML
     private TableView<Persona> tbViewPersonas;
@@ -73,6 +79,16 @@ public class TbPersonasController implements Initializable{
 		}
     }
     
+    @FXML
+    void modificarPersona(ActionEvent event) {
+    	
+    }
+    
+    @FXML
+    void eliminarPersona(ActionEvent event) {
+    	
+    }
+
     /*
      * Añade la informacion de la ventana DatosPersonasAgregarController a la tabla
      * */

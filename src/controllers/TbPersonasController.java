@@ -77,7 +77,7 @@ public class TbPersonasController implements Initializable{
 			Parent root = loader.load();
 			/* Le dice a la nueva ventana cual es su ventana padre */
 			newPersonaWindow = loader.getController();
-			newPersonaWindow.setParent(this);
+			newPersonaWindow.setParent(this, null);
 			
 			Stage agregarStage = new Stage();
 			agregarStage.setScene(new Scene(root));
@@ -92,7 +92,22 @@ public class TbPersonasController implements Initializable{
     
     @FXML
     void modificarPersona(ActionEvent event) {
-    	
+    	try {
+    		
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/DatosPersonasAgregar.fxml"));
+			Parent root = loader.load();
+			newPersonaWindow = loader.getController();
+			newPersonaWindow.setParent(this, tbViewPersonas.getItems().get(personaIndex));
+			
+			Stage agregarStage = new Stage();
+			agregarStage.setScene(new Scene(root));
+			agregarStage.getIcons().add(ICONO);
+			agregarStage.setTitle("Modificar Persona");
+			agregarStage.showAndWait();
+			
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
     }
     
     @FXML

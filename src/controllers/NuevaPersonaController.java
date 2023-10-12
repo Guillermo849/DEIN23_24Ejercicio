@@ -35,8 +35,11 @@ public class NuevaPersonaController {
     @FXML
     private Button btnCancelar;
     
-    public void setParent(TbPersonasController parent) {
+    private Persona person;
+    
+    public void setParent(TbPersonasController parent, Persona per) {
     	this.mainController = parent;
+    	this.person = per;
     }
     
     /* Cierra la ventana */
@@ -52,6 +55,15 @@ public class NuevaPersonaController {
     @FXML
     void guardarPersona(ActionEvent event) {
     	
+    	if (person == null) {
+    		nuevaPersona(event);
+    	} else {
+    		modPersona();
+    	}
+    	
+    }
+    
+    private void nuevaPersona(ActionEvent event) {
     	Image icono = new Image(Main.class.getResourceAsStream("/img/agenda.png"));
     	
     	/*
@@ -99,6 +111,9 @@ public class NuevaPersonaController {
     		stage.close();
     		
     	}
+    }
+    
+    private void modPersona() {
     	
     }
 

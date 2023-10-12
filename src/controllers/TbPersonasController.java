@@ -22,7 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import model.Persona;
@@ -57,6 +57,17 @@ public class TbPersonasController implements Initializable{
     private NuevaPersonaController newPersonaWindow;
     
     private static Image ICONO = new Image(Main.class.getResourceAsStream("/img/agenda.png"));
+    
+    private int personaIndex;
+    
+    @FXML
+    void selectPersona(MouseEvent event) {
+    	if (tbViewPersonas.getSelectionModel().getSelectedItem() != null) {
+    		Persona personMod = tbViewPersonas.getSelectionModel().getSelectedItem();
+        	
+    		personaIndex = tbViewPersonas.getSelectionModel().getSelectedIndex();
+    	}
+    }
     
     @FXML
     void aniadirPersona(ActionEvent event) {
@@ -98,6 +109,7 @@ public class TbPersonasController implements Initializable{
         tbViewPersonas.setItems(obLstPersonas);
     }
     
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		

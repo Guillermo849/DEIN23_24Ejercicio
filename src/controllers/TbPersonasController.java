@@ -63,8 +63,6 @@ public class TbPersonasController implements Initializable{
     @FXML
     void selectPersona(MouseEvent event) {
     	if (tbViewPersonas.getSelectionModel().getSelectedItem() != null) {
-    		Persona personMod = tbViewPersonas.getSelectionModel().getSelectedItem();
-        	
     		personaIndex = tbViewPersonas.getSelectionModel().getSelectedIndex();
     	}
     }
@@ -110,9 +108,12 @@ public class TbPersonasController implements Initializable{
 		}
     }
     
+    /* Elimina la persona seleccionada*/
     @FXML
     void eliminarPersona(ActionEvent event) {
-    	
+    	if (personaIndex > -1) {
+    		tbViewPersonas.getItems().remove(personaIndex);
+    	}
     }
 
     /*
